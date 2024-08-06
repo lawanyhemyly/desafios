@@ -1,7 +1,7 @@
 var jogahtml = window.document.getElementById('saida')
 
 function clique1() {
-jogahtml.innerHTML += '<p> Você clicou escolheu a primeira opção botão 1 </p>'
+jogahtml.innerHTML += '<p> Você clicou escolheu a primeira opção = botão 1 </p>'
 }
 
 function clique2() {
@@ -26,5 +26,5 @@ function parimpar() {
     }
     
     let res = document.querySelector('section#result')
-    res.innerHTML = <p>0 número digitado foi ${num} e ele é: ${tipo}!</p>
+    res.innerHTML = `<p>0 número digitado foi ${num} e ele é: ${tipo}!</p>`
 }
