@@ -2,6 +2,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+  background: linear-gradient(to bottom, white, gold, pink);
 }
 
 .carrossel {
@@ -11,6 +15,8 @@ body {
 #imagemPrincipal {
   width: 300px;
   height: auto;
+  border-radius: 10px; /* Adiciona bordas arredondadas */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adiciona sombra */
 }
 
 .miniaturas {
@@ -21,4 +27,10 @@ body {
 .mini {
   width: 100px;
   cursor: pointer;
+  border-radius: 5px; /* Adiciona bordas arredondadas */
+  transition: transform 0.3s; /* Efeito de transição */
+}
+
+.mini:hover {
+  transform: scale(1.05); /* Aumenta a miniatura ao passar o mouse */
 }
