@@ -56,3 +56,9 @@ button:hover {
         border-radius: 5px; /* Arredonda as bordas da mensagem */
         background-color: rgba(255, 255, 255, 0.8); /* Fundo levemente branco */
     }
+
+fundo {
+    height: 100vh; /* Define a altura do corpo */
+    margin: 0; /* Remove a margem padrão */
+    background: linear-gradient(to right, yellow, gray); /* Gradiente do amarelo ao cinza */
+}
