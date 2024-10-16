@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Juros do Cartão</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background: linear-gradient(white, black); /* Fundo gradiente branco e preto */
+            padding: 20px;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9); /* Fundo semi-transparente */
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .hidden {
+            display: none;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Calculadora de Juros do Cartão</h1>
+
+    <label for="months">Quantos meses está sem pagar?</label>
+    <input type="number" id="months" placeholder="Insira o número de meses" min="1" required>
+
+    <div id="formularioJuros" class="hidden">
+        <label for="taxa">Informe a taxa de juros ao mês (%):</label>
+        <input type="number" id="taxa" placeholder="Insira a taxa de juros" step="0.01" min="0" required>
+
+        <label for="valor">Informe o valor da dívida (R$):</label>
+        <input type="number" id="valor" placeholder="Insira o valor da dívida" step="0.01" min="0" required>
+
+        <button onclick="calcularJuros()">Calcular Juros</button>
+    </div>
+
+    <div id="resultado" class="result hidden"></div>
+</div>
+
+<script>
+    const monthsInput = document.getElementById('months');
+    const formularioJuros = document.getElementById('formularioJuros');
+    const resultadoDiv = document.getElementById('resultado');
+
+    monthsInput.addEventListener('input', function() {
+        if (monthsInput.value > 0) {
+            formularioJuros.classList.remove('hidden');
+        } else {
+            formularioJuros.classList.add('hidden');
+        }
+    });
+
+    function calcularJuros() {
+        const taxa = parseFloat(document.getElementById('taxa').value);
+        const valor = parseFloat(document.getElementById('valor').value);
+        const meses = parseInt(monthsInput.value);
+
+        if (isNaN(taxa) || isNaN(valor) || isNaN(meses)) {
+            alert('Por favor, preencha todos os campos corretamente.');
+            return;
+        }
+
+        // Fórmula de juros compostos: M = P * (1 + i)^n
+        const montante = valor * Math.pow((1 + (taxa / 100)), meses);
+
+        // Exibir o resultado
+        resultadoDiv.innerHTML = `O valor total com juros após ${meses} meses é: R$ ${montante.toFixed(2)}`;
+        resultadoDiv.classList.remove('hidden');
+    }
+</script>
+
+</body>
+</html>
