@@ -10,6 +10,10 @@ html, body {
     margin: 0;
     padding: 0;
 }
+h1{
+    columns: 3;
+    text-align: justify;
+}
 
 body {
     font-family: Arial, sans-serif;
@@ -94,4 +98,3 @@ footer {
 footer p {
     margin: 5px 0;
 }
-
