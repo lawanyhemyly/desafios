@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Salário</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #6a0dad, #ffffff);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 60%;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .content {
+            display: flex;
+        }
+
+        .left-side {
+            width: 40%;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #foto-perfil {
+            max-width: 100%;
+            border-radius: 50%;
+        }
+
+        .right-side {
+            width: 60%;
+            padding: 40px;
+            background-color: #f8f8f8;
+        }
+
+        h1 {
+            color: #6a0dad;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #6a0dad;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #5b0dab;
+        }
+
+        .resultados {
+            margin-top: 20px;
+        }
+
+        .resultados p {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .historico {
+            margin-top: 40px;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .historico h2 {
+            color: #6a0dad;
+            margin-bottom: 10px;
+        }
+
+        .historico ul {
+            list-style-type: none;
+        }
+
+        .historico li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="left-side">
+                <img src="sua-imagem.jpg" alt="Foto" id="foto-perfil">
+            </div>
+            <div class="right-side">
+                <h1>Calculadora de Salário</h1>
+                <form id="salary-form">
+                    <label for="name">Nome:</label>
+                    <input type="text" id="name" name="name" required><br><br>
+
+                    <label for="salary">Salário Bruto:</label>
+                    <input type="number" id="salary" name="salary" required><br><br>
+
+                    <button type="button" onclick="calcularSalario()">Enviar</button>
+                </form>
+                <div class="resultados">
+                    <p id="salario-bruto"></p>
+                    <p id="imposto-renda"></p>
+                    <p id="salario-liquido"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="historico">
+            <h2>Histórico de Pesquisas</h2>
+            <ul id="historico-lista">
+                <!-- Histórico de cálculos aparecerá aqui -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+    function calcularSalario() {
+        var nome = document.getElementById("name").value;
+        var salarioBruto = parseFloat(document.getElementById("salary").value);
+        var impostoRenda = 0;
+
+        // Determina a alíquota de imposto com base no salário bruto
+        if (salarioBruto > 5000) {
+            impostoRenda = salarioBruto * 0.175;
+        } else if (salarioBruto > 4000) {
+            impostoRenda = salarioBruto * 0.12;
+        } else if (salarioBruto > 3000) {
+            impostoRenda = salarioBruto * 0.075;
+        } else if (salarioBruto > 1800) {
+            impostoRenda = salarioBruto * 0.035;
+        } else {
+            impostoRenda = 0; // Isento
+        }
+
+        var salarioLiquido = salarioBruto - impostoRenda;
+
+        // Exibe os resultados na tela
+        document.getElementById("salario-bruto").innerText = "Salário Bruto: R$ " + salarioBruto.toFixed(2);
+        document.getElementById("imposto-renda").innerText = "Imposto de Renda: R$ " + impostoRenda.toFixed(2);
+        document.getElementById("salario-liquido").innerText = "Salário Líquido: R$ " + salarioLiquido.toFixed(2);
+
+        // Salva no armazenamento local (localStorage)
+        salvarHistorico(nome, salarioBruto, impostoRenda, salarioLiquido);
+        carregarHistorico();
+    }
+
+    function salvarHistorico(nome, salarioBruto, impostoRenda, salarioLiquido) {
+        // Obtém o histórico salvo ou cria um array vazio se não houver histórico
+        var historico = JSON.parse(localStorage.getItem("historicoSalario")) || [];
+
+        // Adiciona a nova entrada ao histórico
+        historico.push({
+            nome: nome,
+            salarioBruto: salarioBruto.toFixed(2),
+            impostoRenda: impostoRenda.toFixed(2),
+            salarioLiquido: salarioLiquido.toFixed(2)
+        });
+
+        // Salva o histórico atualizado no localStorage
+        localStorage.setItem("historicoSalario", JSON.stringify(historico));
+    }
+
+    function carregarHistorico() {
+        // Obtém o histórico do localStorage
+        var historico = JSON.parse(localStorage.getItem("historicoSalario")) || [];
+
+        // Limpa a lista atual
+        var lista = document.getElementById("historico-lista");
+        lista.innerHTML = '';
+
+        // Adiciona cada item do histórico à lista
+        historico.forEach(function(item) {
+            var li = document.createElement("li");
+            li.innerText = `Nome: ${item.nome} | Salário Bruto: R$ ${item.salarioBruto} | Imposto de Renda: R$ ${item.impostoRenda} | Salário Líquido: R$ ${item.salarioLiquido}`;
+            lista.appendChild(li);
+        });
+    }
+
+    // Carrega o histórico ao abrir a página
+    window.onload = function() {
+        carregarHistorico();
+    };
+</script>
+
+</body>
+</html>
