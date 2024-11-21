@@ -124,6 +124,19 @@
             var impostoRenda = salarioBruto * 0.15;  // Exemplo de imposto de 15%
             var salarioLiquido = salarioBruto - impostoRenda;
 
+             // Determina a alíquota de imposto com base no salário bruto
+             if (salarioBruto > 5000) {
+                impostoRenda = salarioBruto * 0.175;
+            } else if (salarioBruto > 4000) {
+                impostoRenda = salarioBruto * 0.12;
+            } else if (salarioBruto > 3000) {
+                impostoRenda = salarioBruto * 0.075;
+            } else if (salarioBruto > 1800) {
+                impostoRenda = salarioBruto * 0.035;
+            }
+
+            var salarioLiquido = salarioBruto - impostoRenda;
+
             document.getElementById("salario-bruto").innerText = "Salário Bruto: R$ " + salarioBruto.toFixed(2);
             document.getElementById("imposto-renda").innerText = "Imposto de Renda: R$ " + impostoRenda.toFixed(2);
             document.getElementById("salario-liquido").innerText = "Salário Líquido: R$ " + salarioLiquido.toFixed(2);
