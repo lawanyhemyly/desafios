@@ -125,15 +125,18 @@
             var salarioLiquido = salarioBruto - impostoRenda;
 
              // Determina a alíquota de imposto com base no salário bruto
-             if (salarioBruto > 5000) {
-                impostoRenda = salarioBruto * 0.175;
-            } else if (salarioBruto > 4000) {
-                impostoRenda = salarioBruto * 0.12;
-            } else if (salarioBruto > 3000) {
-                impostoRenda = salarioBruto * 0.075;
-            } else if (salarioBruto > 1800) {
-                impostoRenda = salarioBruto * 0.035;
-            }
+        if (salarioBruto > 5000) {
+            impostoRenda = salarioBruto * 0.175;
+        } else if (salarioBruto > 4000) {
+            impostoRenda = salarioBruto * 0.12;
+        } else if (salarioBruto > 3000) {
+            impostoRenda = salarioBruto * 0.075;
+        } else if (salarioBruto > 1800) {
+            impostoRenda = salarioBruto * 0.035;
+        } else {
+            impostoRenda = 0; // Isento
+        }
+
 
             var salarioLiquido = salarioBruto - impostoRenda;
 
